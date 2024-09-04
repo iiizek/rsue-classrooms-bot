@@ -4,11 +4,13 @@ import fs from "fs";
 
 import textScenario from "./commands/textScenario.js";
 import { buttonReplies } from "./commands/mainBuildKeyboard.js";
+import spamProtection from "./middlewares/spamProtection.js";
 
 dotenv.config();
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
-
 const mainBuild = JSON.parse(fs.readFileSync("./src/data/main-build.json"));
+
+bot.use(spamProtection);
 
 bot.start(async ctx => {
 	ctx.reply(
